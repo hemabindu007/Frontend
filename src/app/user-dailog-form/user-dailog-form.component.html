@@ -1,0 +1,221 @@
+<!-- <div style="width: 70%; height:90%;text-align: center;">
+    <h2 mat-dialog-title>
+        @if(data == true){
+            <span>Add Employee</span>
+        }
+        
+  </h2>
+  <form class="userForm" [formGroup]="userForm">
+ <mat-dialog-content>
+    <div class="d-flex align-items-center m-b-16">
+        <h6>Choose an Image to upload</h6><br>
+        <button mat-flat-button color="primary" class="m-l-16 input-file-button">
+          <input type="file" (change)="selectFile($event)" #fileInput  formControlName="user_image_path" accept="image/*"/>
+          @if(userForm.get('user_image_path')?.invalid && userForm.get('user_image_path')?.dirty){
+            <div>
+                @if(userForm.get('user_image_path')?.hasError('required')){
+                    <div >Please select an image.</div>
+                }
+             @if(userForm.get('user_image_path')?.hasError('invalidImageType')){
+                <div>Invalid image type. Only
+                    image files are allowed.</div>
+             }
+               
+              </div>
+          }
+         
+        </button>
+      </div>
+      @if(isLoading){
+        <div class="d-flex justify-content-center" >
+            <mat-progress-spinner class="loader" color="primary" mode="indeterminate" diameter="50" strokeWidth="5">
+            </mat-progress-spinner>
+          </div>
+      }
+      <div class="bg-light-primary rounded ">
+        <h6 class="p-8 mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          Personal Info
+        </h6>
+      </div>
+ </mat-dialog-content>
+  </form>
+</div> -->
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <form [formGroup]="userForm">
+      <div class="row justify-content-between m-b-24">
+        <div class="col-sm-6 d-flex align-items-center">
+          <h4 class="mat-subtitle-2 f-s-18 f-w-600">
+            @if(action == 'add'){
+              <span name="id"  ngDefaultControl> Add Employee</span>
+            }
+            @if(action == 'edit'){
+              <span name="id"  ngDefaultControl> Update Employee</span>
+            }
+          </h4>
+        </div>
+        <div class="col-sm-4 text-right">
+          <button [routerLink]="['']"  class="m-r-10" mat-stroked-button color="warn" style="color: black;border-color: rgb(214, 149, 149); background-color: rgb(241, 144, 144);"> 
+            Cancel
+          </button>
+          &nbsp;&nbsp;
+          @if(action == 'add'){
+            <button mat-raised-button color="primary"(click)="saveDetails()"[disabled]="userForm.invalid">
+              Add Employee
+            </button>
+          }
+          @if(action != 'add'){
+            <button mat-raised-button color="primary"(click)="updateDetails()">
+              Update Employee
+            </button>
+          }
+  
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row m-y-24 p-t-24" style="padding-top: 20px;">
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>First Name</mat-label>
+            <input matInput  placeholder="First Name" formControlName="first_name"/>
+            @if(userForm.controls['first_name'].invalid && userForm.controls['first_name'].touched){
+              <mat-error >
+              First Name is Required
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Last Name" formControlName="last_name"/>
+            @if(userForm.controls['last_name'].invalid && userForm.controls['last_name'].touched){
+              <mat-error >
+              Last Name is Required
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email"/>
+            @if(userForm.controls['email'].invalid && userForm.controls['email'].touched){
+              <mat-error >
+             <!-- Email is Required -->
+             @if(userForm.controls['email'].hasError('emailExists')){
+                <span>  Email already exists.</span>
+             }
+                @if(userForm.controls['email'].errors?.['required']){
+                  <span>Email is Required.</span>
+                }
+                @if(userForm.controls['email'].errors?.['pattern']){
+                  <span>Please enter a valid email address.</span>
+                }
+             
+          
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+        @if(this.action == 'add'){
+          <div class="col-sm-6">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Password</mat-label>
+              <input matInput placeholder="Password" formControlName="password"/>
+              @if(userForm.controls['password'].invalid && userForm.controls['password'].touched){
+                <mat-error >
+               Password is Required
+                </mat-error>
+               }
+            </mat-form-field>
+          </div>
+        }
+       
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Emp Code</mat-label>
+            <input matInput placeholder="Emp Code" formControlName="emp_code"/>
+            @if(userForm.controls['emp_code'].invalid && userForm.controls['emp_code'].touched){
+              <mat-error >
+             Emp Code is Required
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput placeholder="Mobile Number" formControlName="mobile"/>
+            @if(userForm.controls['mobile'].invalid && userForm.controls['mobile'].touched){
+              <mat-error >
+             Mobile Number is Required
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option value="Male">Male</mat-option>
+              <mat-option value="Female">Female</mat-option>
+            </mat-select>
+            @if(userForm.controls['gender'].invalid && userForm.controls['gender'].touched){
+              <mat-error >
+             Gender is Required
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+              @for (roles of allRoles; track $index) {
+                <mat-option [value]="roles.roleCode">{{roles.roleName}}</mat-option>
+              }
+             
+            </mat-select>
+            @if(userForm.controls['role'].invalid && userForm.controls['role'].touched){
+              <mat-error >
+             Role is Required
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Date of birth</mat-label>
+          <input matInput (dateChange)="setSelectedDate($event.value,null)" [matDatepicker]="picker1"
+            formControlName="date_of_birth" placeholder="Date of Birth">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          @if(userForm.controls['date_of_birth'].invalid && userForm.controls['date_of_birth'].touched){
+              <mat-error >
+             Date of birth is Required
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Date of Joining</mat-label>
+          <input matInput (dateChange)="setSelectedDate(null,$event.value)" [matDatepicker]="picker2"
+            formControlName="date_of_joining" placeholder="Date of Joining">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+          @if(userForm.controls['date_of_joining'].invalid && userForm.controls['date_of_joining'].touched){
+              <mat-error >
+             {{errMessageOfDates}}
+              </mat-error>
+             }
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+

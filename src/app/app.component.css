@@ -1,0 +1,40 @@
+
+.padding{
+    margin-left: 15px;
+}
+.extra{
+    flex: 1 1 auto;
+}
+.sidenav-wrapper {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #eee;
+  }
+  .sidenav{
+    width: 250px;
+    padding: 20px;
+    button{
+      color: #525aa7;
+    }
+    button span{
+      font-size: 16px;
+    }
+  }
+  .sidenav-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  button span{
+    margin: 5px;
+  }
+
+  .mat-mdc-menu-item{
+    color: #525aa7;
+  }
+  .rounded-circle {
+    border-radius: 50% !important;
+  }

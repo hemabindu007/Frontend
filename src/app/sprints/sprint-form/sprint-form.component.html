@@ -1,0 +1,36 @@
+<!-- Form GroupArray First profileForm
+<div formGroupName="profileForm">
+
+    <label for="street">First Name: </label>
+    <input id="street" type="text" formControlName="firstName">
+
+    <label for="street">Last Name: </label>
+    <input id="street" type="text" formControlName="lastName">
+    <div formGroupName="address">
+        <h2>Address</h2>
+      
+        <label for="street">Street: </label>
+        <input id="street" type="text" formControlName="street">
+      
+        <label for="city">City: </label>
+        <input id="city" type="text" formControlName="city">
+      
+        <label for="state">State: </label>
+        <input id="state" type="text" formControlName="state">
+      
+        <label for="zip">Zip Code: </label>
+        <input id="zip" type="text" formControlName="zip">
+      </div>
+      <div formArrayName="aliases">
+        <h2>Aliases</h2>
+        <button type="button" (click)="addAlias()">+ Add another alias</button>
+        <ng-container *ngFor="let aliasControl of aliases.controls; let i=index">
+          <div [formGroupName]="i" *ngIf="">
+            <label for="alias-{{ i }}">Alias:</label>
+            <input id="alias-{{ i }}" type="text" formControlName="alias">
+          </div>
+        </ng-container>
+      </div>
+</div> -->
+<h3 style="text-align: center;padding-top: 15px;">{{Title()}}</h3>
+<h2 style="text-align: center;">{{resultOfRoute}}</h2>
